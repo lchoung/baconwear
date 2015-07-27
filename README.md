@@ -1,2 +1,9 @@
 # baconwear
-CMU BDT closet app
+CMUBDT closet app
+
+### Getting Started
+
+```
+npm install
+npm start
+```
