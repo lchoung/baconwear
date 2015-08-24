@@ -3,7 +3,10 @@ var React = require('react');
 var Clothing = React.createClass({
   propTypes: {
     name: React.PropTypes.string,
-    photos: React.PropTypes.arrayOf(React.PropTypes.object),
+    photos: React.PropTypes.shape({
+      main: React.PropTypes.object,
+      other: React.PropTypes.arrayOf(React.PropTypes.object),
+    }),
     gender: React.PropTypes.string,
     style: React.PropTypes.string,
     borrower: React.PropTypes.string,
@@ -12,9 +15,19 @@ var Clothing = React.createClass({
   },
 
   render: function() {
+    var canBorrow = !this.props.borrower;
+    var borrowText = canBorrow ? 'Borrow' : 'Taken';
+
     return (
-      <div>
-        {this.props.name} ({this.props.style}, {this.props.gender})
+      <div className="media">
+        <div className="media-left">
+          <img className="image media-object" src={this.props.photos.main._url} />
+        </div>
+        <div className="media-body">
+          <h3 className="media-heading">{this.props.name}</h3>
+          <h4>{this.props.style} &sdot; {this.props.gender}</h4>
+          <a disabled={!canBorrow}>{borrowText}</a>
+        </div>
       </div>
     );
   },

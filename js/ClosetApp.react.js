@@ -19,7 +19,10 @@ var ClosetApp = React.createClass({
   _renderClothing: function(clothing) {
     var props = {
       name: clothing.name,
-      photos: clothing.photos,
+      photos: {
+        main: clothing.photo,
+        other: [],
+      },
       gender: clothing.gender,
       style: clothing.style,
       borrower: clothing.borrower,
@@ -27,17 +30,17 @@ var ClosetApp = React.createClass({
       returnDate: clothing.returnDate,
     };
     return (
-      <li key={clothing.objectId} className="clothing">
-        <Clothing {...props} />
-      </li>
+      <div key={clothing.objectId} className="panel col-md-5">
+        <Clothing className="clothing" {...props} />
+      </div>
     );
   },
 
   render: function() {
     return (
-      <ul>
+      <div>
         {this.data.clothing.map(this._renderClothing)}
-      </ul>
+      </div>
     );
   },
 });

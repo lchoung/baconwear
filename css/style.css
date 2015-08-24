@@ -1,0 +1,68 @@
+@font-face {
+  font-family: "Radley";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Radley"), url("http://fonts.gstatic.com/s/radley/v9/UTbgAl3muiq7aUhg3IKeIA.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Radley";
+  font-style: italic;
+  font-weight: 400;
+  src: local("Radley Italic"), local("Radley-Italic"), url("http://fonts.gstatic.com/s/radley/v9/hztq3onOJfu5NWEzZxu6D_esZW2xOQ-xsNqO47m55DA.woff2") format("woff2");
+}
+
+html, div, span, p, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Radley';
+}
+
+body {
+  color: '#777';
+  padding: 5px 10px;
+  font-size: 12pt;
+}
+
+h1 {
+  font-style: italic;
+}
+
+h1, h2, h3 {
+  color: '#121212';
+}
+
+h4, h5, h6 {
+  color: '#777';
+}
+
+#header {
+  margin-bottom: 20px;
+}
+
+.panel {
+  border: none;
+  box-shadow: none;
+}
+
+.media-object.image {
+  height: 120px;
+  width: 160px;
+  border: 1px solid '#777';
+}
+
+.media-body {
+  padding: 10px 15px;
+}
+
+a {
+  color: '#FF4D5B';
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:disabled {
+  color: '#777';
+}
+
