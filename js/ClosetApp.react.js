@@ -3,17 +3,41 @@ var ParseReact = require('parse-react');
 var React = require('react');
 
 var Clothing = require('./Clothing.react.js');
+var FilterButton = require('./FilterButton.react.js');
+
+var FILTERS = {
+  gender: ['male', 'female', 'any'],
+  style: ['latin', 'standard', 'any'],
+};
 
 var ClosetApp = React.createClass({
   mixins: [ParseReact.Mixin],
 
-  observe: function() {
+  observe: function(props, state) {
     var Clothing = Parse.Object.extend('Clothing');
     var clothingQuery = new Parse.Query(Clothing);
-    // TODO: sort and filter clothing by state
+    // Filter clothing by state
+    if (state.gender !== 'any') {
+      clothingQuery = clothingQuery.equalTo('gender', state.gender);
+    }
+    if (state.style !== 'any') {
+      clothingQuery = clothingQuery.equalTo('style', state.style);
+    }
+
     return {
       clothing: clothingQuery,
     };
+  },
+
+  getInitialState: function() {
+    return {
+      gender: 'any',
+      style: 'any',
+    };
+  },
+
+  _setFilter: function(filter, value) {
+    this.setState({[`${filter}`]: value});
   },
 
   _renderClothing: function(clothing) {
@@ -36,10 +60,34 @@ var ClosetApp = React.createClass({
     );
   },
 
+  _renderFilterButtons: function(filter) {
+    return FILTERS[filter].map((value, i) =>
+      <FilterButton
+        key={i}
+        active={value === this.state[filter]}
+        onClick={this._setFilter.bind(this, filter, value)}>
+        {value}
+      </FilterButton>
+    );
+  },
+
   render: function() {
     return (
       <div>
-        {this.data.clothing.map(this._renderClothing)}
+        <section id="filters">
+          <div className="row">
+            <div className="btn-group btn-group-lg btn-group-justified">
+              {this._renderFilterButtons('gender')}
+            </div>
+            <div className="btn-group btn-group-lg btn-group-justified">
+              {this._renderFilterButtons('style')}
+            </div>
+          </div>
+        </section>
+
+        <section id="clothes">
+          {this.data.clothing.map(this._renderClothing)}
+        </section>
       </div>
     );
   },

@@ -16,6 +16,10 @@ html, div, span, p, h1, h2, h3, h4, h5, h6 {
   font-family: 'Radley';
 }
 
+section {
+  margin: 20px auto;
+}
+
 body {
   color: '#777';
   padding: 5px 10px;
