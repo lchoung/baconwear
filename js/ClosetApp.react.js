@@ -2,6 +2,7 @@ var Parse = require('parse').Parse;
 var ParseReact = require('parse-react');
 var React = require('react');
 
+var _ = require('./capitalize.js');
 var Clothing = require('./Clothing.react.js');
 var FilterButton = require('./FilterButton.react.js');
 
@@ -47,8 +48,8 @@ var ClosetApp = React.createClass({
         main: clothing.photo,
         other: [],
       },
-      gender: clothing.gender,
-      style: clothing.style,
+      gender: clothing.gender.capitalize(),
+      style: clothing.style.capitalize(),
       borrower: clothing.borrower,
       borrowDate: clothing.borrowDate,
       returnDate: clothing.returnDate,
@@ -66,7 +67,7 @@ var ClosetApp = React.createClass({
         key={i}
         active={value === this.state[filter]}
         onClick={this._setFilter.bind(this, filter, value)}>
-        {value}
+        {value.capitalize()}
       </FilterButton>
     );
   },
