@@ -1,5 +1,10 @@
 var React = require('react');
 
+var cx = require('classnames');
+var moment = require('moment');
+
+var DATE_FORMAT = 'ddd MMM Do, YYYY';
+
 var Clothing = React.createClass({
   propTypes: {
     name: React.PropTypes.string,
@@ -16,7 +21,9 @@ var Clothing = React.createClass({
 
   render: function() {
     var canBorrow = !this.props.borrower;
-    var borrowText = canBorrow ? 'Borrow' : 'Taken';
+    var borrowText = canBorrow
+      ? 'Borrow'
+      : ['Loaned to', this.props.borrower, 'until', moment(this.props.returnDate).format(DATE_FORMAT)].join(' ');
 
     return (
       <div className="media">
@@ -26,7 +33,11 @@ var Clothing = React.createClass({
         <div className="media-body">
           <h3 className="media-heading">{this.props.name}</h3>
           <h4>{this.props.style} &sdot; {this.props.gender}</h4>
-          <a disabled={!canBorrow}>{borrowText}</a>
+          <a href="#" // TODO: link to form for borrowing
+             className={cx({takenLink: !canBorrow})}
+             disabled={!canBorrow}>
+            {borrowText}
+          </a>
         </div>
       </div>
     );
