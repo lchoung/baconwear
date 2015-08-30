@@ -10,7 +10,7 @@ var FilterButton = React.createClass({
   },
 
   render: function() {
-    var className = cx('btn', 'btn-default', {
+    var className = cx('btn', 'btn-default', 'btn-filter', {
       'active': this.props.active,
     });
     return (

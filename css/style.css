@@ -17,7 +17,7 @@ html, div, span, p, h1, h2, h3, h4, h5, h6 {
 }
 
 section {
-  margin: 20px auto;
+  margin: 40px auto;
 }
 
 body {
@@ -38,8 +38,9 @@ h4, h5, h6 {
   color: #777;
 }
 
-#header {
+.btn-filter {
   margin-bottom: 20px;
+  width: 200px;
 }
 
 .panel {
@@ -69,5 +70,9 @@ a:hover {
 a:disabled, a.takenLink {
   color: #777;
   cursor: default;
+}
+
+#footer {
+  margin-bottom: 20px;
 }
 

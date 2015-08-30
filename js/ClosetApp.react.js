@@ -11,6 +11,8 @@ var FILTERS = {
   style: ['latin', 'standard', 'any'],
 };
 
+var MAX_RESULTS = 50;
+
 var ClosetApp = React.createClass({
   mixins: [ParseReact.Mixin],
 
@@ -25,15 +27,17 @@ var ClosetApp = React.createClass({
       clothingQuery = clothingQuery.equalTo('style', state.style);
     }
 
+    // don't show any results if we're missing a filter
+    var limit = state.gender && state.style ? MAX_RESULTS : 0;
     return {
-      clothing: clothingQuery,
+      clothing: clothingQuery.limit(limit),
     };
   },
 
   getInitialState: function() {
     return {
-      gender: 'any',
-      style: 'any',
+      gender: null,
+      style: null,
     };
   },
 
@@ -62,7 +66,7 @@ var ClosetApp = React.createClass({
   },
 
   _renderFilterButtons: function(filter) {
-    return FILTERS[filter].map((value, i) =>
+    var buttons = FILTERS[filter].map((value, i) =>
       <FilterButton
         key={i}
         active={value === this.state[filter]}
@@ -70,24 +74,33 @@ var ClosetApp = React.createClass({
         {value.capitalize()}
       </FilterButton>
     );
+
+    return (
+      <div className="row text-center">
+        <h3>Select a {filter}:</h3>
+        <div className="btn-group btn-group-lg">
+          {buttons}
+        </div>
+      </div>
+    );
   },
 
   render: function() {
     return (
       <div>
         <section id="filters">
-          <div className="row">
-            <div className="btn-group btn-group-lg btn-group-justified">
-              {this._renderFilterButtons('gender')}
-            </div>
-            <div className="btn-group btn-group-lg btn-group-justified">
-              {this._renderFilterButtons('style')}
-            </div>
-          </div>
+          {this._renderFilterButtons('gender')}
+          {this._renderFilterButtons('style')}
         </section>
+        <hr />
 
         <section id="clothes">
-          {this.data.clothing.map(this._renderClothing)}
+          <div className="row">
+            {this.data.clothing.map(this._renderClothing)}
+          </div>
+          <div id="footer">
+            <h6>{this.data.clothing.length > 0 && 'END OF RESULTS'}</h6>
+          </div>
         </section>
       </div>
     );
