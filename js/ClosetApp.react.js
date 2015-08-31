@@ -54,7 +54,7 @@ var ClosetApp = React.createClass({
       name: clothing.name,
       photos: {
         main: clothing.photo,
-        other: [],
+        large: clothing.photoBack,
       },
       gender: clothing.gender.capitalize(),
       style: clothing.style.capitalize(),
@@ -67,13 +67,11 @@ var ClosetApp = React.createClass({
   _renderClothing: function(clothing, index) {
     var props = this._getClothingProps(clothing);
     return (
-      <div key={clothing.objectId} className="panel col-md-5">
-        <Clothing
-          className="clothing"
-          openModal={this._openModal.bind(this, index)}
-          {...props}
-          />
-      </div>
+      <Clothing
+        key={clothing.objectId}
+        openModal={this._openModal.bind(this, index)}
+        {...props}
+      />
     );
   },
 

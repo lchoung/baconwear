@@ -10,7 +10,7 @@ var Clothing = React.createClass({
     name: React.PropTypes.string,
     photos: React.PropTypes.shape({
       main: React.PropTypes.object,
-      other: React.PropTypes.arrayOf(React.PropTypes.object),
+      large: React.PropTypes.object,
     }),
     gender: React.PropTypes.string,
     style: React.PropTypes.string,
@@ -29,29 +29,14 @@ var Clothing = React.createClass({
 
     var imageSource = this.props.photos.main
       ? this.props.photos.main._url
-      : 'http://placekitten.com/200/250';
+      : 'http://placekitten.com/180/240';
 
     return (
-      <div className="media">
-        <div className="media-left">
-          <a href="#" onClick={this.props.openModal} data-toggle="modal" data-target="#imageModal">
-            <img
-              className="image media-object"
-              width={200}
-              height={250}
-              src={imageSource}
-            />
-          </a>
-        </div>
-        <div className="media-body">
-          <h3 className="media-heading">{this.props.name}</h3>
-          <h4>{this.props.style} &sdot; {this.props.gender}</h4>
-          <a href="#" // TODO: link to form for borrowing
-             className={cx({takenLink: !canBorrow})}
-             disabled={!canBorrow}>
-            {borrowText}
-          </a>
-        </div>
+      <div className="clothing panel text-center">
+        <h4 className="clothing-title">{this.props.name}</h4>
+        <a href="#" onClick={this.props.openModal} data-toggle="modal" data-target="#imageModal">
+          <img className="image" width={180} height={240} src={imageSource} />
+        </a>
       </div>
     );
   },

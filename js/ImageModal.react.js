@@ -8,7 +8,7 @@ var ImageModal = React.createClass({
     name: React.PropTypes.string,
     photos: React.PropTypes.shape({
       main: React.PropTypes.object,
-      other: React.PropTypes.arrayOf(React.PropTypes.object),
+      large: React.PropTypes.object,
     }),
     gender: React.PropTypes.string,
     style: React.PropTypes.string,
@@ -18,7 +18,9 @@ var ImageModal = React.createClass({
   },
 
   render: function() {
-    var imageSource = this.props.photos.main
+    var imageSource = this.props.photos.large
+      ? this.props.photos.large._url
+      : this.props.photos.main
       ? this.props.photos.main._url
       : 'http://placekitten.com/1000/750';
 
