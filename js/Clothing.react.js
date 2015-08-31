@@ -17,6 +17,8 @@ var Clothing = React.createClass({
     borrower: React.PropTypes.string,
     borrowDate: React.PropTypes.object,
     returnDate: React.PropTypes.object,
+
+    openModal: React.PropTypes.func.isRequired,
   },
 
   render: function() {
@@ -32,12 +34,14 @@ var Clothing = React.createClass({
     return (
       <div className="media">
         <div className="media-left">
-          <img
-            className="image media-object"
-            width={200}
-            height={250}
-            src={imageSource}
-          />
+          <a href="#" onClick={this.props.openModal} data-toggle="modal" data-target="#imageModal">
+            <img
+              className="image media-object"
+              width={200}
+              height={250}
+              src={imageSource}
+            />
+          </a>
         </div>
         <div className="media-body">
           <h3 className="media-heading">{this.props.name}</h3>
