@@ -36,7 +36,7 @@ var Clothing = React.createClass({
       <div className="clothing panel text-center">
         <h4 className="clothing-title">{this.props.name}</h4>
         <a href="#" onClick={this.props.openModal} data-toggle="modal" data-target="#imageModal">
-          <LazyLoad height={240}>
+          <LazyLoad height="240">
             <img className="image" width={180} height={240} src={imageSource} />
           </LazyLoad>
         </a>

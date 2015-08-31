@@ -6,7 +6,7 @@ require('./capitalize.js');
 
 var Clothing = require('./Clothing.react.js');
 var FilterButton = require('./FilterButton.react.js');
-var ImageModal = require('./ImageModal.react.js');
+var Modal = require('./Modal.react.js');
 
 var FILTERS = {
   gender: ['male', 'female', 'any'],
@@ -69,7 +69,7 @@ var ClosetApp = React.createClass({
     return (
       <Clothing
         key={clothing.objectId}
-        openModal={this._openModal.bind(this, index)}
+        openModal={this._setClothing.bind(this, index)}
         {...props}
       />
     );
@@ -102,11 +102,22 @@ var ClosetApp = React.createClass({
     }
 
     var props = this._getClothingProps(clothing);
-    return <ImageModal {...props} />;
+    return (
+      <Modal
+        nextItem={this._setClothing.bind(this, 1, true)}
+        prevItem={this._setClothing.bind(this, -1, true)}
+        {...props}
+      />
+    );
   },
 
-  _openModal: function(index) {
-    this.setState({currentClothing: index});
+  _setClothing: function(index, increment) {
+    var value = index;
+    if (increment) {
+      var length = this.data.clothing.length;
+      value = (this.state.currentClothing + value + length) % length;
+    }
+    this.setState({currentClothing: value});
   },
 
   render: function() {

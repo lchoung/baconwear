@@ -107,6 +107,10 @@ a:disabled, a.takenLink {
   cursor: default;
 }
 
+a.carousel-control:hover {
+  cursor: pointer;
+}
+
 #footer {
   margin-bottom: 20px;
 }
