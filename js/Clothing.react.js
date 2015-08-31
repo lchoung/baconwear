@@ -1,3 +1,4 @@
+var LazyLoad = require('react-lazy-load');
 var React = require('react');
 
 var cx = require('classnames');
@@ -35,7 +36,9 @@ var Clothing = React.createClass({
       <div className="clothing panel text-center">
         <h4 className="clothing-title">{this.props.name}</h4>
         <a href="#" onClick={this.props.openModal} data-toggle="modal" data-target="#imageModal">
-          <img className="image" width={180} height={240} src={imageSource} />
+          <LazyLoad height={240}>
+            <img className="image" width={180} height={240} src={imageSource} />
+          </LazyLoad>
         </a>
       </div>
     );

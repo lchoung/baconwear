@@ -1,3 +1,4 @@
+var LazyLoad = require('react-lazy-load');
 var React = require('react');
 
 global.jQuery = require('jquery');
@@ -29,7 +30,9 @@ var ImageModal = React.createClass({
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <img className="modal-image" src={imageSource} />
+              <LazyLoad height={750}>
+                <img className="modal-image" src={imageSource} />
+              </LazyLoad>
               <div className="text-overlay left">
                 <h3>
                   {this.props.name + ' '}
