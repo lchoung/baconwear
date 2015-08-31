@@ -56,9 +56,29 @@ h4, h5, h6 {
   padding: 10px 15px;
 }
 
+#imageModal .modal-body {
+  padding: 0;
+}
+
 .modal-image {
+  border-radius: 10px;
+  position: relative;
   width: 100%;
   height: auto;
+}
+
+.text-overlay {
+  position: absolute;
+  top: 5px;
+}
+
+.text-overlay.left {
+  left: 30px;
+}
+
+.text-overlay.right {
+  top: 15px;
+  right: 30px;
 }
 
 a {

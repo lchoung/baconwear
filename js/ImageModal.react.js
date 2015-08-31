@@ -26,17 +26,17 @@ var ImageModal = React.createClass({
       <div className="modal fade" id="imageModal" tabIndex={-1}>
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
-            <div className="modal-header">
-              <button type="button" className="close" data-dismiss="modal">
-                &times;
-              </button>
-              <div className="modal-title">
-                <h3>{this.props.name}</h3>
-                <h4>({this.props.style}/{this.props.gender})</h4>
-              </div>
-            </div>
             <div className="modal-body">
               <img className="modal-image" src={imageSource} />
+              <div className="text-overlay left">
+                <h3>
+                  {this.props.name + ' '}
+                  <small>({this.props.style}, {this.props.gender})</small>
+                </h3>
+              </div>
+              <button type="button" className="close text-overlay right" data-dismiss="modal">
+                &times;
+              </button>
             </div>
           </div>
         </div>
