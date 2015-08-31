@@ -25,10 +25,19 @@ var Clothing = React.createClass({
       ? 'Borrow'
       : ['Loaned to', this.props.borrower, 'until', moment(this.props.returnDate).format(DATE_FORMAT)].join(' ');
 
+    var imageSource = this.props.photos.main
+      ? this.props.photos.main._url
+      : 'http://placekitten.com/200/250';
+
     return (
       <div className="media">
         <div className="media-left">
-          <img className="image media-object" src={this.props.photos.main._url} />
+          <img
+            className="image media-object"
+            width={200}
+            height={250}
+            src={imageSource}
+          />
         </div>
         <div className="media-body">
           <h3 className="media-heading">{this.props.name}</h3>

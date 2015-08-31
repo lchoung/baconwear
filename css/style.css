@@ -49,8 +49,6 @@ h4, h5, h6 {
 }
 
 .media-object.image {
-  height: 120px;
-  width: 160px;
   border: 1px solid #777;
 }
 
