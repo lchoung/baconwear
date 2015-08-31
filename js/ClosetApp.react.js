@@ -2,12 +2,11 @@ var Parse = require('parse').Parse;
 var ParseReact = require('parse-react');
 var React = require('react');
 
-global.jQuery = require('jquery');
-require('bootstrap');
 require('./capitalize.js');
 
 var Clothing = require('./Clothing.react.js');
 var FilterButton = require('./FilterButton.react.js');
+var ImageModal = require('./ImageModal.react.js');
 
 var FILTERS = {
   gender: ['male', 'female', 'any'],
@@ -49,8 +48,9 @@ var ClosetApp = React.createClass({
     this.setState({[`${filter}`]: value});
   },
 
-  _renderClothing: function(clothing, index) {
-    var props = {
+  /* Convert Parse Clothing object to props */
+  _getClothingProps: function(clothing) {
+    return {
       name: clothing.name,
       photos: {
         main: clothing.photo,
@@ -62,6 +62,10 @@ var ClosetApp = React.createClass({
       borrowDate: clothing.borrowDate,
       returnDate: clothing.returnDate,
     };
+  },
+
+  _renderClothing: function(clothing, index) {
+    var props = this._getClothingProps(clothing);
     return (
       <div key={clothing.objectId} className="panel col-md-5">
         <Clothing
@@ -98,27 +102,9 @@ var ClosetApp = React.createClass({
     if (!clothing) {
       return null;
     }
-    var imageSource = clothing.photo ? clothing.photo._url : '';
 
-    return (
-      <div className="modal fade" id="imageModal" tabIndex={-1}>
-        <div className="modal-dialog modal-lg">
-          <div className="modal-content">
-            <div className="modal-header">
-              <button type="button" className="close" data-dismiss="modal">
-                &times;
-              </button>
-              <div className="modal-title">
-                <h3>{clothing.name}</h3><h4>({clothing.style}/{clothing.gender})</h4>
-              </div>
-            </div>
-            <div className="modal-body">
-              <img className="modal-image" src={imageSource} />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    var props = this._getClothingProps(clothing);
+    return <ImageModal {...props} />;
   },
 
   _openModal: function(index) {
