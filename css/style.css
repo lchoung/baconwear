@@ -93,6 +93,12 @@ h4, h5, h6 {
   right: 30px;
 }
 
+.btn-overlay {
+  position: absolute;
+  bottom: 15px;
+  right: 30px;
+}
+
 a {
   color: #FF4D5B;
   text-decoration: none;
@@ -102,7 +108,7 @@ a:hover {
   text-decoration: none;
 }
 
-a:disabled, a.takenLink {
+a:disabled {
   color: #777;
   cursor: default;
 }

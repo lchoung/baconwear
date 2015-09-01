@@ -1,11 +1,6 @@
 var LazyLoad = require('react-lazy-load');
 var React = require('react');
 
-var cx = require('classnames');
-var moment = require('moment');
-
-var DATE_FORMAT = 'ddd MMM Do, YYYY';
-
 var Clothing = React.createClass({
   propTypes: {
     name: React.PropTypes.string,
@@ -23,11 +18,6 @@ var Clothing = React.createClass({
   },
 
   render: function() {
-    var canBorrow = !this.props.borrower;
-    var borrowText = canBorrow
-      ? 'Borrow'
-      : ['Loaned to', this.props.borrower, 'until', moment(this.props.returnDate).format(DATE_FORMAT)].join(' ');
-
     var imageSource = this.props.photos.main
       ? this.props.photos.main._url
       : 'http://placekitten.com/180/240';
