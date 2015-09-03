@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "_default": {
+      "link": "baconwear"
+    },
+    "baconwear": {
+      "applicationId": "YXvSIjRRf2csXhdUXSUNpfZ3HeOiNzO1CtTTTa0Q"
+    }
+  }
+}
