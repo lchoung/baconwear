@@ -1,6 +1,8 @@
 var LazyLoad = require('react-lazy-load');
 var React = require('react');
 
+var cx = require('classnames');
+
 var Clothing = React.createClass({
   propTypes: {
     name: React.PropTypes.string,
@@ -23,7 +25,9 @@ var Clothing = React.createClass({
       : 'http://placekitten.com/180/240';
 
     return (
-      <div className="clothing panel text-center">
+      <div className={cx('clothing', 'panel', 'text-center', {
+        'borrowed': !!this.props.borrower,
+      })}>
         <h4 className="clothing-title">{this.props.name}</h4>
         <a href="#" onClick={this.props.openModal} data-toggle="modal" data-target="#imageModal">
           <LazyLoad height="240">

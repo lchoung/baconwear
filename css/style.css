@@ -53,11 +53,18 @@ h4, h5, h6 {
 }
 
 .clothing.panel {
+  background-color: #DFF0D8;
   border: none;
   box-shadow: none;
+  border-radius: 5px;
   display: inline-block;
   margin: 10px;
   width: 220px;
+  padding-bottom: 10px;
+}
+
+.clothing.panel.borrowed {
+  background-color: #F2DEDE;
 }
 
 .panel .image {
