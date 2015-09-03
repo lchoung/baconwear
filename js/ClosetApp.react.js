@@ -104,7 +104,6 @@ var ClosetApp = React.createClass({
     var props = this._getClothingProps(clothing);
     return (
       <Modal
-        borrowURL={this._borrowURL()}
         nextItem={this._setClothing.bind(this, 1, true)}
         prevItem={this._setClothing.bind(this, -1, true)}
         {...props}
@@ -119,11 +118,6 @@ var ClosetApp = React.createClass({
       value = (this.state.currentClothing + value + length) % length;
     }
     this.setState({currentClothing: value});
-  },
-
-  _borrowURL: function() {
-    var clothing = this.data.clothing[this.state.currentClothing];
-    return 'borrow?id=' + clothing.label;
   },
 
   render: function() {

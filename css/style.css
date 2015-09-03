@@ -99,6 +99,22 @@ h4, h5, h6 {
   right: 30px;
 }
 
+.borrow-form {
+  margin: 0;
+  padding: 20px 40px;
+}
+
+.form.right {
+  margin-top: 10px;
+  margin-left: 40px;
+  display: inline-block;
+  width: 60%;
+}
+
+.form-title {
+  margin-top: 0;
+}
+
 a {
   color: #FF4D5B;
   text-decoration: none;
@@ -117,7 +133,10 @@ a.carousel-control:hover {
   cursor: pointer;
 }
 
+.btn:not(:first-child) {
+  margin-left: 10px;
+}
+
 #footer {
   margin-bottom: 20px;
 }
-
