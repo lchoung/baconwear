@@ -1,4 +1,5 @@
 var React = require('react');
+var ParseReact = require('parse-react');
 
 global.jQuery = require('jquery');
 require('bootstrap');
@@ -12,6 +13,7 @@ var DATE_FORMAT = 'ddd MMM Do, YYYY';
 
 var Modal = React.createClass({
   propTypes: {
+    clothing: React.PropTypes.object,
     borrower: React.PropTypes.string,
     returnDate: React.PropTypes.object,
 
@@ -40,7 +42,13 @@ var Modal = React.createClass({
   _onSubmit: function(name, andrewID, returnDate) {
     console.log(name, andrewID, returnDate);
     // TODO: fill google sheet
-    // TODO: mutate Parse data
+
+    // Mutate Parse borrow data
+    ParseReact.Mutation.Set(this.props.clothing, {
+      borrower: name,
+      borrowDate: moment()._d,
+      returnDate: returnDate._d,
+    }).dispatch();
   },
 
   render: function() {

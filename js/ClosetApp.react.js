@@ -104,6 +104,7 @@ var ClosetApp = React.createClass({
     var props = this._getClothingProps(clothing);
     return (
       <Modal
+        clothing={clothing}
         nextItem={this._setClothing.bind(this, 1, true)}
         prevItem={this._setClothing.bind(this, -1, true)}
         {...props}
