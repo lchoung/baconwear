@@ -8,6 +8,7 @@ var ModalItem = React.createClass({
       large: React.PropTypes.object,
     }),
     gender: React.PropTypes.string,
+    size: React.PropTypes.string,
     style: React.PropTypes.string,
     borrower: React.PropTypes.string,
     borrowDate: React.PropTypes.object,
@@ -27,7 +28,7 @@ var ModalItem = React.createClass({
         <div className="text-overlay left">
           <h3>
             {this.props.name + ' '}
-            <small>({this.props.style}, {this.props.gender})</small>
+            <small>({this.props.style}, {this.props.gender}, {this.props.size})</small>
           </h3>
         </div>
       </div>
