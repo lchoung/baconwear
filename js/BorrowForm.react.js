@@ -1,6 +1,5 @@
 var DatePicker = require('react-datepicker');
 var React = require('react');
-
 var moment = require('moment');
 
 var DATE_FORMAT = 'ddd MMM Do, YYYY';
