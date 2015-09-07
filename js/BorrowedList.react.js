@@ -13,9 +13,11 @@ var BorrowedList = React.createClass({
   mixins: [ParseReact.Mixin],
 
   observe: function(props, state) {
-    // Only show borrowed clothing
+    // Only show borrowed clothing, sorted by date
     var Clothing = Parse.Object.extend('Clothing');
-    var clothingQuery = new Parse.Query(Clothing).exists('borrower');
+    var clothingQuery = new Parse.Query(Clothing)
+      .exists('borrower')
+      .ascending('updatedAt');
 
     // TODO: paginate results
     return {
@@ -74,6 +76,10 @@ var BorrowedList = React.createClass({
               {this.data.clothing.map(this._renderClothing)}
             </tbody>
           </table>
+
+          <div id="footer">
+            <h4><a href="/">Back to Closet</a></h4>
+          </div>
         </section>
       </div>
     );

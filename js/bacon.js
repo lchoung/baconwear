@@ -8,10 +8,10 @@ Parse.initialize("YXvSIjRRf2csXhdUXSUNpfZ3HeOiNzO1CtTTTa0Q", "F4E6BFoCVg12TD4jua
 // HACK: Conditionally load different apps depending on page
 var ClosetApp;
 $(document).ready(function() {
-  if (window.location.pathname === '/borrowed') {
-    ClosetApp = require('./ClosetApp.react.js');
-  } else {
+  if (window.location.pathname.indexOf('/borrowed') !== -1) {
     ClosetApp = require('./BorrowedList.react.js');
+  } else {
+    ClosetApp = require('./ClosetApp.react.js');
   }
 
   React.render(
