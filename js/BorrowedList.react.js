@@ -78,7 +78,7 @@ var BorrowedList = React.createClass({
           </table>
 
           <div id="footer">
-            <h4><a href="/">Back to Closet</a></h4>
+            <h4><a href="/baconwear/">Back to Closet</a></h4>
           </div>
         </section>
       </div>
