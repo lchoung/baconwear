@@ -9,6 +9,7 @@ var ModalItem = React.createClass({
     }),
     gender: React.PropTypes.string,
     size: React.PropTypes.string,
+    status: React.PropTypes.string,
     style: React.PropTypes.string,
     borrower: React.PropTypes.string,
     borrowDate: React.PropTypes.object,

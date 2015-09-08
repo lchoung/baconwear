@@ -12,6 +12,7 @@ var BorrowForm = React.createClass({
       large: React.PropTypes.object,
     }),
     gender: React.PropTypes.string,
+    status: React.PropTypes.string,
     style: React.PropTypes.string,
     borrower: React.PropTypes.string,
     borrowDate: React.PropTypes.object,

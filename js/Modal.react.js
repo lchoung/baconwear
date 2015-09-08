@@ -16,6 +16,7 @@ var Modal = React.createClass({
     clothing: React.PropTypes.object,
     borrower: React.PropTypes.string,
     returnDate: React.PropTypes.object,
+    status: React.PropTypes.string,
 
     nextItem: React.PropTypes.func.isRequired,
     prevItem: React.PropTypes.func.isRequired,
@@ -28,7 +29,12 @@ var Modal = React.createClass({
   },
 
   _onBorrow: function() {
-    if (this.props.borrower) {
+    var canBorrow = (
+      !this.props.borrower ||
+      this.props.status === 'canceled' ||
+      this.props.status === 'returned'
+    );
+    if (!canBorrow) {
       return;
     }
 
@@ -40,20 +46,22 @@ var Modal = React.createClass({
   },
 
   _onSubmit: function(name, andrewID, returnDate) {
-    console.log(name, andrewID, returnDate);
-    // TODO: fill google sheet
-
     // Mutate Parse borrow data
     ParseReact.Mutation.Set(this.props.clothing, {
       borrower: name,
       borrowDate: moment()._d,
       returnDate: returnDate._d,
+      status: 'pending',
     }).dispatch();
   },
 
   render: function() {
     var {nextItem, prevItem, ...props} = this.props;
-    var canBorrow = !this.props.borrower;
+    var canBorrow = (
+      !this.props.borrower ||
+      this.props.status === 'canceled' ||
+      this.props.status === 'returned'
+    );
     var borrowText = canBorrow
       ? 'Borrow'
       : ['Loaned to', this.props.borrower, 'until', moment(this.props.returnDate).format(DATE_FORMAT)].join(' ');

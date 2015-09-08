@@ -25,24 +25,66 @@ var BorrowedList = React.createClass({
     };
   },
 
-  /* Convert Parse Clothing object to props */
-  _getClothingProps: function(clothing) {
-    return {
-      name: clothing.name,
-      photos: {
-        main: clothing.photo,
-        large: clothing.photoBack,
-      },
-      gender: clothing.gender.capitalize(),
-      size: clothing.size,
-      style: clothing.style.capitalize(),
-      borrower: clothing.borrower,
-      borrowDate: clothing.borrowDate,
-      returnDate: clothing.returnDate,
-    };
+  _onConfirm: function(clothing) {
+    if (!confirm('Are you sure you wish to mark this as loaned?')) {
+      return;
+    }
+
+    ParseReact.Mutation.Set(clothing, {
+      status: 'loaned',
+    }).dispatch();
+  },
+
+  _onCancel: function(clothing) {
+    if (!confirm('Are you sure you wish to cancel this loan?')) {
+      return;
+    }
+
+    ParseReact.Mutation.Set(clothing, {
+      status: 'canceled',
+    }).dispatch();
+  },
+
+  _onReturn: function(clothing) {
+    if (!confirm('Are you sure you wish to mark this as returned?')) {
+      return;
+    }
+
+    ParseReact.Mutation.Set(clothing, {
+      status: 'returned',
+    }).dispatch();
   },
 
   _renderClothing: function(clothing, index) {
+    var actions = clothing.status === 'pending'
+      ? <td>
+          <button
+            type="button"
+            className="btn btn-xs btn-success"
+            title="Mark as loaned"
+            onClick={this._onConfirm.bind(this, clothing)}>
+            <span className="glyphicon glyphicon-ok" />
+          </button>
+          <button
+            type="button"
+            className="btn btn-xs btn-danger"
+            title="Cancel loan"
+            onClick={this._onCancel.bind(this, clothing)}>
+            <span className="glyphicon glyphicon-remove" />
+          </button>
+        </td>
+      : clothing.status === 'loaned'
+      ? <td>
+          <button
+            type="button"
+            className="btn btn-xs btn-success"
+            title="Mark as returned"
+            onClick={this._onReturn.bind(this, clothing)}>
+            <span className="glyphicon glyphicon-sunglasses" />
+          </button>
+        </td>
+      : <td/>;
+
     return (
       <tr key={clothing.objectId}>
         <td>{clothing.label}</td>
@@ -53,6 +95,8 @@ var BorrowedList = React.createClass({
         <td>{clothing.borrower}</td>
         <td>{moment(clothing.borrowDate).format(DATE_FORMAT)}</td>
         <td>{moment(clothing.returnDate).format(DATE_FORMAT)}</td>
+        <td>{clothing.status.capitalize()}</td>
+        {actions}
       </tr>
     );
   },
@@ -71,6 +115,8 @@ var BorrowedList = React.createClass({
               <th>Borrower</th>
               <th>Borrow Date</th>
               <th>Return Date</th>
+              <th>Status</th>
+              <th>Action</th>
             </thead>
             <tbody>
               {this.data.clothing.map(this._renderClothing)}

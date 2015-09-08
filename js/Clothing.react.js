@@ -12,6 +12,7 @@ var Clothing = React.createClass({
     }),
     gender: React.PropTypes.string,
     size: React.PropTypes.string,
+    status: React.PropTypes.string,
     style: React.PropTypes.string,
     borrower: React.PropTypes.string,
     borrowDate: React.PropTypes.object,
@@ -24,10 +25,16 @@ var Clothing = React.createClass({
     var imageSource = this.props.photos.main
       ? this.props.photos.main._url
       : 'http://placekitten.com/180/240';
+    console.log(this.props.status);
+    var canBorrow = (
+      !this.props.borrower ||
+      this.props.status === 'canceled' ||
+      this.props.status === 'returned'
+    );
 
     return (
       <div className={cx('clothing', 'panel', 'text-center', {
-        'borrowed': !!this.props.borrower,
+        'borrowed': !canBorrow,
       })}>
         <h4 className="clothing-title">{this.props.name}</h4>
         <a href="#" onClick={this.props.openModal} data-toggle="modal" data-target="#imageModal">
