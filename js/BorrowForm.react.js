@@ -1,4 +1,5 @@
 var DatePicker = require('react-datepicker');
+var ParseReact = require('parse-react');
 var React = require('react');
 var moment = require('moment');
 
@@ -19,7 +20,8 @@ var BorrowForm = React.createClass({
     returnDate: React.PropTypes.object,
 
     onCancel: React.PropTypes.func.isRequired,
-    onSubmit: React.PropTypes.func.isRequired,
+    onSuccess: React.PropTypes.func.isRequired,
+    onFailure: React.PropTypes.func.isRequired,
   },
 
   getInitialState: function() {
@@ -27,6 +29,7 @@ var BorrowForm = React.createClass({
       name: '',
       andrewID: '',
       returnDate: null,
+      submitting: false,
     };
   },
 
@@ -36,13 +39,27 @@ var BorrowForm = React.createClass({
   },
 
   _onSubmit: function() {
+    this.setState({submitting: true});
     var {name, andrewID, returnDate} = this.state;
     var canSubmit = name && andrewID && returnDate;
     if (!canSubmit) {
       return;
     }
 
-    this.props.onSubmit(name, andrewID, returnDate);
+    // Mutate Parse borrow data
+    ParseReact.Mutation.Set(this.props.clothing, {
+      borrower: name,
+      borrowDate: moment()._d,
+      returnDate: returnDate._d,
+      status: 'pending',
+    }).dispatch()
+    .done(() => this._onSuccess(name, andrewID, returnDate))
+    .fail(this.props.onFailure);
+  },
+
+  _onSuccess: function(name, andrewID, returnDate) {
+    this.setState({submitting: false});
+    this.props.onSuccess(name, andrewID, returnDate);
   },
 
   render: function() {
@@ -61,8 +78,9 @@ var BorrowForm = React.createClass({
 
     var submitButton = (
       <button
+        type="button"
         className="btn btn-warning"
-        disabled={!canSubmit}
+        disabled={!canSubmit || this.state.submitting}
         onClick={this._onSubmit}>
         Submit
       </button>
@@ -75,6 +93,7 @@ var BorrowForm = React.createClass({
           <input
             type="text" className="form-control" id="input-name"
             placeholder="Yimeng Shoe"
+            disabled={this.state.submitting}
             onChange={this.handleChange.bind(this, 'name')}
             value={name}
           />
@@ -84,6 +103,7 @@ var BorrowForm = React.createClass({
           <input
             type="text" className="form-control" id="input-andrew"
             placeholder="ymgshoe"
+            disabled={this.state.submitting}
             onChange={this.handleChange.bind(this, 'andrewID')}
             value={andrewID}
           />
@@ -93,6 +113,7 @@ var BorrowForm = React.createClass({
           <DatePicker
             className="datepicker__input"
             id="input-date"
+            disabled={this.state.submitting}
             dateFormat={DATE_FORMAT}
             placeholderText="Select a date"
             minDate={moment()}

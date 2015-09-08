@@ -1,5 +1,4 @@
 var React = require('react');
-var ParseReact = require('parse-react');
 
 global.jQuery = require('jquery');
 require('bootstrap');
@@ -45,14 +44,14 @@ var Modal = React.createClass({
     this.setState({formActive: false});
   },
 
-  _onSubmit: function(name, andrewID, returnDate) {
-    // Mutate Parse borrow data
-    ParseReact.Mutation.Set(this.props.clothing, {
-      borrower: name,
-      borrowDate: moment()._d,
-      returnDate: returnDate._d,
-      status: 'pending',
-    }).dispatch();
+  _onSuccess: function(name, andrewID, returnDate) {
+    alert('Successfully borrowed ' + this.props.name + '!');
+    this.setState({formActive: false});
+  },
+
+  _onFailure: function() {
+    alert('Uh oh! Something went wrong. Please try again, or contact a ballroom officer.');
+    this.setState({formActive: false});
   },
 
   render: function() {
@@ -67,7 +66,12 @@ var Modal = React.createClass({
       : ['Loaned to', this.props.borrower, 'until', moment(this.props.returnDate).format(DATE_FORMAT)].join(' ');
 
     var content = this.state.formActive
-      ? <BorrowForm onCancel={this._onCancel} onSubmit={this._onSubmit} {...props} />
+      ? <BorrowForm
+          onCancel={this._onCancel}
+          onSuccess={this._onSuccess}
+          onFailure={this._onFailure}
+          {...props}
+        />
       : <ModalItem {...props} />;
 
     var carouselControls = !this.state.formActive && (

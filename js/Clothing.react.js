@@ -25,7 +25,6 @@ var Clothing = React.createClass({
     var imageSource = this.props.photos.main
       ? this.props.photos.main._url
       : 'http://placekitten.com/180/240';
-    console.log(this.props.status);
     var canBorrow = (
       !this.props.borrower ||
       this.props.status === 'canceled' ||
