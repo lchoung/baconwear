@@ -71,7 +71,7 @@ var BorrowForm = React.createClass({
     var canSubmit = name && andrewID && returnDate;
 
     var closeButton = (
-      <button className="btn btn-default" onClick={this.props.onCancel}>
+      <button type="button" className="btn btn-default" onClick={this.props.onCancel}>
         Cancel
       </button>
     );

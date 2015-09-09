@@ -122,10 +122,6 @@ var BorrowedList = React.createClass({
               {this.data.clothing.map(this._renderClothing)}
             </tbody>
           </table>
-
-          <div id="footer">
-            <h4><a href="/baconwear/">Back to Closet</a></h4>
-          </div>
         </section>
       </div>
     );
