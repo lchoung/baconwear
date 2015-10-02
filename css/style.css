@@ -121,14 +121,27 @@ h4, h5, h6 {
 }
 
 .form.right {
+  display: inline-block;
   margin-top: 10px;
   margin-left: 40px;
-  display: inline-block;
   width: 60%;
 }
 
 .form-title {
   margin-top: 0;
+}
+
+.form-group-small {
+  display: inline-block;
+  width: 50%;
+}
+
+.form select.width-small {
+  width: 80%;
+}
+
+.form-buttons {
+  margin-top: 20px;
 }
 
 a {
