@@ -14,9 +14,7 @@ var Modal = React.createClass({
   propTypes: {
     canBorrow: React.PropTypes.bool,
     clothing: React.PropTypes.object,
-    //borrower: React.PropTypes.string,
     returnDate: React.PropTypes.object,
-    status: React.PropTypes.string,
 
     nextItem: React.PropTypes.func.isRequired,
     prevItem: React.PropTypes.func.isRequired,

@@ -12,8 +12,6 @@ var Clothing = React.createClass({
       large: React.PropTypes.object,
     }),
     gender: React.PropTypes.string,
-    size: React.PropTypes.string,
-    status: React.PropTypes.string,
     style: React.PropTypes.string,
     quantity: React.PropTypes.shape({
       S: React.PropTypes.number,

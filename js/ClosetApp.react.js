@@ -61,8 +61,6 @@ var ClosetApp = React.createClass({
         large: clothing.photoBack,
       },
       gender: clothing.gender.capitalize(),
-      size: clothing.size,
-      status: clothing.status,
       style: clothing.style.capitalize(),
       quantity: {
         'S': clothing.quantityS,
