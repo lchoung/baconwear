@@ -50,8 +50,12 @@ var ClosetApp = React.createClass({
 
   /* Convert Parse Clothing object to props */
   _getClothingProps: function(clothing) {
+    var canBorrow =
+      clothing.quantityS + clothing.quantityM + clothing.quantityL > 0;
+
     return {
       name: clothing.name,
+      label: clothing.label,
       photos: {
         main: clothing.photo,
         large: clothing.photoBack,
@@ -60,9 +64,15 @@ var ClosetApp = React.createClass({
       size: clothing.size,
       status: clothing.status,
       style: clothing.style.capitalize(),
-      borrower: clothing.borrower,
+      quantity: {
+        'S': clothing.quantityS,
+        'M': clothing.quantityM,
+        'L': clothing.quantityL,
+      },
+      /*borrower: clothing.borrower,
       borrowDate: clothing.borrowDate,
-      returnDate: clothing.returnDate,
+      returnDate: clothing.returnDate,*/
+      canBorrow: canBorrow,
     };
   },
 

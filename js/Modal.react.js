@@ -12,8 +12,9 @@ var DATE_FORMAT = 'ddd MMM Do, YYYY';
 
 var Modal = React.createClass({
   propTypes: {
+    canBorrow: React.PropTypes.bool,
     clothing: React.PropTypes.object,
-    borrower: React.PropTypes.string,
+    //borrower: React.PropTypes.string,
     returnDate: React.PropTypes.object,
     status: React.PropTypes.string,
 
@@ -28,12 +29,7 @@ var Modal = React.createClass({
   },
 
   _onBorrow: function() {
-    var canBorrow = (
-      !this.props.borrower ||
-      this.props.status === 'canceled' ||
-      this.props.status === 'returned'
-    );
-    if (!canBorrow) {
+    if (!this.props.canBorrow) {
       return;
     }
 
@@ -56,14 +52,10 @@ var Modal = React.createClass({
 
   render: function() {
     var {nextItem, prevItem, ...props} = this.props;
-    var canBorrow = (
-      !this.props.borrower ||
-      this.props.status === 'canceled' ||
-      this.props.status === 'returned'
-    );
-    var borrowText = canBorrow
+    var borrowText = this.props.canBorrow
       ? 'Borrow'
-      : ['Loaned to', this.props.borrower, 'until', moment(this.props.returnDate).format(DATE_FORMAT)].join(' ');
+      : 'Loaned out!';
+      //['Loaned to', this.props.borrower, 'until', moment(this.props.returnDate).format(DATE_FORMAT)].join(' ');
 
     var content = this.state.formActive
       ? <BorrowForm
@@ -94,10 +86,10 @@ var Modal = React.createClass({
     var borrowButton = !this.state.formActive && (
       <a
         className={cx('btn', 'btn-lg', 'btn-overlay', {
-          'btn-warning': canBorrow,
-          'btn-default': !canBorrow,
+          'btn-warning': this.props.canBorrow,
+          'btn-default': !this.props.canBorrow,
         })}
-        disabled={!canBorrow}
+        disabled={!this.props.canBorrow}
         onClick={this._onBorrow}
         role="button">
         {borrowText}

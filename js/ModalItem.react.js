@@ -3,6 +3,7 @@ var React = require('react');
 var ModalItem = React.createClass({
   propTypes: {
     name: React.PropTypes.string,
+    label: React.PropTypes.string,
     photos: React.PropTypes.shape({
       main: React.PropTypes.object,
       large: React.PropTypes.object,
@@ -29,7 +30,7 @@ var ModalItem = React.createClass({
         <div className="text-overlay left">
           <h3>
             {this.props.name + ' '}
-            <small>({this.props.style}, {this.props.gender}, {this.props.size})</small>
+            <small>({this.props.style}, {this.props.gender})</small>
           </h3>
         </div>
       </div>

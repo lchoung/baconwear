@@ -47,6 +47,15 @@ h4, h5, h6 {
   width: 200px;
 }
 
+.clothing-sizes {
+  padding: 0 10px;
+  color: #121212;
+}
+
+.clothing-out {
+  color: #999;
+}
+
 .btn-filter {
   margin-bottom: 20px;
   width: 200px;
