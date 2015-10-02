@@ -8,6 +8,8 @@ var moment = require('moment');
 var DATE_FORMAT = 'ddd MMM Do, YYYY';
 
 var BorrowForm = React.createClass({
+  _sizeOptions: [],
+
   propTypes: {
     name: React.PropTypes.string,
     label: React.PropTypes.string,
@@ -18,9 +20,6 @@ var BorrowForm = React.createClass({
     gender: React.PropTypes.string,
     status: React.PropTypes.string,
     style: React.PropTypes.string,
-    /*borrower: React.PropTypes.string,
-    borrowDate: React.PropTypes.object,
-    returnDate: React.PropTypes.object,*/
 
     onCancel: React.PropTypes.func.isRequired,
     onSuccess: React.PropTypes.func.isRequired,
@@ -37,6 +36,24 @@ var BorrowForm = React.createClass({
     };
   },
 
+  componentDidMount: function() {
+    var SIZES = {
+      S: 'Small',
+      M: 'Medium',
+      L: 'Large',
+    };
+    var sizeOptions = ['S', 'M', 'L'].filter((size) =>
+      this.props.quantity[size] > 0
+    );
+
+    if (sizeOptions.length > 0) {
+      this.setState({size: sizeOptions[0]});
+      this._sizeOptions = sizeOptions.map((size) => {
+        return <option key={size} value={size}>{SIZES[size]}</option>;
+      });
+    }
+  },
+
   handleChange: function(state, event) {
     var value = event.target ? event.target.value : event;
     this.setState({[`${state}`]: value});
@@ -50,22 +67,24 @@ var BorrowForm = React.createClass({
       return;
     }
 
-    // Mutate Parse borrow data
-    /*ParseReact.Mutation.Set(this.props.clothing, {
+    // Create new Parse loan
+    ParseReact.Mutation.Create('Loan', {
+      label: this.props.label,
+      name: this.props.name,
       borrower: name,
+      andrewId: andrewID,
       borrowDate: moment()._d,
       returnDate: returnDate._d,
+      size: size,
       status: 'pending',
     }).dispatch()
-    .done(() => this._onSuccess(name, andrewID, returnDate))
+    .done(() => this._onSuccess(name, andrewID, returnDate, size))
     .fail(this.props.onFailure);
-    */
-    console.log('submitted');
   },
 
-  _onSuccess: function(name, andrewID, returnDate) {
+  _onSuccess: function(name, andrewID, returnDate, size) {
     this.setState({submitting: false});
-    this.props.onSuccess(name, andrewID, returnDate);
+    this.props.onSuccess(name, andrewID, returnDate, size);
   },
 
   render: function() {
@@ -74,7 +93,7 @@ var BorrowForm = React.createClass({
       : 'http://placekitten.com/180/240';
 
     var {name, andrewID, returnDate, size} = this.state;
-    var canSubmit = name && andrewID && returnDate;
+    var canSubmit = name && andrewID && returnDate && size;
 
     var closeButton = (
       <button type="button" className="btn btn-default" onClick={this.props.onCancel}>
@@ -91,17 +110,6 @@ var BorrowForm = React.createClass({
         Submit
       </button>
     );
-
-    var SIZES = {
-      S: 'Small',
-      M: 'Medium',
-      L: 'Large',
-    };
-    var sizeOptions = ['S', 'M', 'L'].filter((size) =>
-      this.props.quantity[size] > 0
-    ).map((size) => {
-      return <option key={size} value={size}>{SIZES[size]}</option>;
-    });
 
     var form = (
       <form className="form right">
@@ -132,7 +140,7 @@ var BorrowForm = React.createClass({
             onChange={this.handleChange.bind(this, 'size')}
             value={size}
           >
-            {sizeOptions}
+            {this._sizeOptions}
           </select>
         </div>
 

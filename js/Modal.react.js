@@ -40,7 +40,7 @@ var Modal = React.createClass({
     this.setState({formActive: false});
   },
 
-  _onSuccess: function(name, andrewID, returnDate) {
+  _onSuccess: function(name, andrewID, returnDate, size) {
     alert('Successfully borrowed ' + this.props.name + '!');
     this.setState({formActive: false});
   },

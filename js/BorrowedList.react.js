@@ -13,89 +13,86 @@ var BorrowedList = React.createClass({
   mixins: [ParseReact.Mixin],
 
   observe: function(props, state) {
-    // Only show borrowed clothing, sorted by date
-    var Clothing = Parse.Object.extend('Clothing');
-    var clothingQuery = new Parse.Query(Clothing)
-      .exists('borrower')
+    // Show borrowed clothing, sorted by date
+    var Loan = Parse.Object.extend('Loan');
+    var loanQuery = new Parse.Query(Loan)
       .ascending('updatedAt');
 
     // TODO: paginate results
     return {
-      clothing: clothingQuery.limit(MAX_RESULTS),
+      loans: loanQuery.limit(MAX_RESULTS),
     };
   },
 
-  _onConfirm: function(clothing) {
+  _onConfirm: function(loan) {
     if (!confirm('Are you sure you wish to mark this as loaned?')) {
       return;
     }
 
-    ParseReact.Mutation.Set(clothing, {
+    ParseReact.Mutation.Set(loan, {
       status: 'loaned',
     }).dispatch();
   },
 
-  _onCancel: function(clothing) {
+  _onCancel: function(loan) {
     if (!confirm('Are you sure you wish to cancel this loan?')) {
       return;
     }
 
-    ParseReact.Mutation.Set(clothing, {
+    ParseReact.Mutation.Set(loan, {
       status: 'canceled',
     }).dispatch();
   },
 
-  _onReturn: function(clothing) {
+  _onReturn: function(loan) {
     if (!confirm('Are you sure you wish to mark this as returned?')) {
       return;
     }
 
-    ParseReact.Mutation.Set(clothing, {
+    ParseReact.Mutation.Set(loan, {
       status: 'returned',
     }).dispatch();
   },
 
-  _renderClothing: function(clothing, index) {
-    var actions = clothing.status === 'pending'
+  _renderLoan: function(loan, index) {
+    var actions = loan.status === 'pending'
       ? <td>
           <button
             type="button"
             className="btn btn-xs btn-success"
             title="Mark as loaned"
-            onClick={this._onConfirm.bind(this, clothing)}>
+            onClick={this._onConfirm.bind(this, loan)}>
             <span className="glyphicon glyphicon-ok" />
           </button>
           <button
             type="button"
             className="btn btn-xs btn-danger"
             title="Cancel loan"
-            onClick={this._onCancel.bind(this, clothing)}>
+            onClick={this._onCancel.bind(this, loan)}>
             <span className="glyphicon glyphicon-remove" />
           </button>
         </td>
-      : clothing.status === 'loaned'
+      : loan.status === 'loaned'
       ? <td>
           <button
             type="button"
             className="btn btn-xs btn-success"
             title="Mark as returned"
-            onClick={this._onReturn.bind(this, clothing)}>
+            onClick={this._onReturn.bind(this, loan)}>
             <span className="glyphicon glyphicon-sunglasses" />
           </button>
         </td>
       : <td/>;
 
     return (
-      <tr key={clothing.objectId}>
-        <td>{clothing.label}</td>
-        <td>{clothing.name}</td>
-        <td>{clothing.gender.capitalize()}</td>
-        <td>{clothing.style.capitalize()}</td>
-        <td>{clothing.size}</td>
-        <td>{clothing.borrower}</td>
-        <td>{moment(clothing.borrowDate).format(DATE_FORMAT)}</td>
-        <td>{moment(clothing.returnDate).format(DATE_FORMAT)}</td>
-        <td>{clothing.status.capitalize()}</td>
+      <tr key={loan.objectId}>
+        <td>{loan.label}</td>
+        <td>{loan.name}</td>
+        <td>{loan.size}</td>
+        <td>{loan.borrower} ({loan.andrewId})</td>
+        <td>{moment(loan.borrowDate).format(DATE_FORMAT)}</td>
+        <td>{moment(loan.returnDate).format(DATE_FORMAT)}</td>
+        <td>{loan.status.capitalize()}</td>
         {actions}
       </tr>
     );
@@ -109,8 +106,6 @@ var BorrowedList = React.createClass({
             <thead>
               <th>Label</th>
               <th>Name</th>
-              <th>Gender</th>
-              <th>Style</th>
               <th>Size</th>
               <th>Borrower</th>
               <th>Borrow Date</th>
@@ -119,7 +114,7 @@ var BorrowedList = React.createClass({
               <th>Action</th>
             </thead>
             <tbody>
-              {this.data.clothing.map(this._renderClothing)}
+              {this.data.loans.map(this._renderLoan)}
             </tbody>
           </table>
         </section>
