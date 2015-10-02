@@ -11,6 +11,7 @@ var BorrowForm = React.createClass({
   _sizeOptions: [],
 
   propTypes: {
+    clothing: React.PropTypes.object,
     name: React.PropTypes.string,
     label: React.PropTypes.string,
     photos: React.PropTypes.shape({
@@ -78,8 +79,18 @@ var BorrowForm = React.createClass({
       size: size,
       status: 'pending',
     }).dispatch()
-    .done(() => this._onSuccess(name, andrewID, returnDate, size))
-    .fail(this.props.onFailure);
+    .done(() => {
+      // Subtract 1 from borrowed clothing quantity
+      var quantityS = this.props.quantity.S - (size === 'S' ? 1 : 0);
+      var quantityM = this.props.quantity.M - (size === 'M' ? 1 : 0);
+      var quantityL = this.props.quantity.L - (size === 'L' ? 1 : 0);
+      ParseReact.Mutation.Set(this.props.clothing, {
+        quantityS: quantityS,
+        quantityM: quantityM,
+        quantityL: quantityL,
+      }).dispatch()
+      .done(() => this._onSuccess(name, andrewID, returnDate, size));
+    }).fail(this.props.onFailure);
   },
 
   _onSuccess: function(name, andrewID, returnDate, size) {

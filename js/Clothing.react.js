@@ -21,9 +21,6 @@ var Clothing = React.createClass({
       L: React.PropTypes.number,
     }),
     canBorrow: React.PropTypes.bool,
-    /*borrower: React.PropTypes.string,
-    borrowDate: React.PropTypes.object,
-    returnDate: React.PropTypes.object,*/
 
     openModal: React.PropTypes.func.isRequired,
   },

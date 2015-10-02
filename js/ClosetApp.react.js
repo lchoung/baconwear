@@ -69,9 +69,6 @@ var ClosetApp = React.createClass({
         'M': clothing.quantityM,
         'L': clothing.quantityL,
       },
-      /*borrower: clothing.borrower,
-      borrowDate: clothing.borrowDate,
-      returnDate: clothing.returnDate,*/
       canBorrow: canBorrow,
     };
   },

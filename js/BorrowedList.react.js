@@ -24,6 +24,30 @@ var BorrowedList = React.createClass({
     };
   },
 
+  // Add 1 to borrowed clothing quantity
+  _incrementSize: function(loan) {
+    var {label, size} = loan;
+    var Clothing = Parse.Object.extend('Clothing');
+    new Parse.Query(Clothing).equalTo('label', label).find({
+      success: function(clothings) {
+        if (clothings.length === 0) {
+          console.log('no clothing matching label found!');
+          return;
+        }
+
+        var clothing = clothings[0];
+        var quantityS = clothing.get('quantityS') + (size === 'S' ? 1 : 0);
+        var quantityM = clothing.get('quantityM') + (size === 'M' ? 1 : 0);
+        var quantityL = clothing.get('quantityL') + (size === 'L' ? 1 : 0);
+        clothing.set('quantityS', quantityS);
+        clothing.set('quantityM', quantityM);
+        clothing.set('quantityL', quantityL);
+        clothing.save();
+      },
+      error: () => console.log('uh oh, failed to increment quantity')
+    });
+  },
+
   _onConfirm: function(loan) {
     if (!confirm('Are you sure you wish to mark this as loaned?')) {
       return;
@@ -42,6 +66,8 @@ var BorrowedList = React.createClass({
     ParseReact.Mutation.Set(loan, {
       status: 'canceled',
     }).dispatch();
+
+    this._incrementSize(loan);
   },
 
   _onReturn: function(loan) {
@@ -52,6 +78,8 @@ var BorrowedList = React.createClass({
     ParseReact.Mutation.Set(loan, {
       status: 'returned',
     }).dispatch();
+
+    this._incrementSize(loan);
   },
 
   _renderLoan: function(loan, index) {
