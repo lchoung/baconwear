@@ -28,6 +28,15 @@ var ClosetApp = React.createClass({
     if (state.style !== 'any') {
       clothingQuery = clothingQuery.equalTo('style', state.style);
     }
+    if (state.sizes.small === false) {
+      clothingQuery = clothingQuery.equalTo('quantityS', 0);
+    }
+    if (state.sizes.medium === false) {
+      clothingQuery = clothingQuery.equalTo('quantityM', 0);
+    }
+    if (state.sizes.large === false) {
+      clothingQuery = clothingQuery.equalTo('quantityL', 0);
+    }
 
     // don't show any results if we're missing a filter
     var limit = state.gender && state.style ? MAX_RESULTS : 0;
@@ -40,12 +49,23 @@ var ClosetApp = React.createClass({
     return {
       gender: null,
       style: null,
+      sizes: {
+        small: true,
+        medium: true,
+        large: true,
+      },
       currentClothing: 0,
     };
   },
 
   _setFilter: function(filter, value) {
     this.setState({[`${filter}`]: value});
+  },
+
+  _toggleSizeFilter: function(size) {
+    var sizes = this.state.sizes;
+    sizes[size] = !sizes[size];
+    this.setState({sizes: sizes});
   },
 
   /* Convert Parse Clothing object to props */
@@ -83,18 +103,30 @@ var ClosetApp = React.createClass({
   },
 
   _renderFilterButtons: function(filter) {
-    var buttons = FILTERS[filter].map((value, i) =>
-      <FilterButton
-        key={i}
-        active={value === this.state[filter]}
-        onClick={this._setFilter.bind(this, filter, value)}>
-        {value.capitalize()}
-      </FilterButton>
-    );
+    var buttons;
+    if (filter === 'sizes') {
+      buttons = ['small', 'medium', 'large'].map((size, i) =>
+        <FilterButton
+          key={i}
+          active={this.state.sizes[size]}
+          onClick={this._toggleSizeFilter.bind(this, size)}>
+          {size.capitalize()}
+        </FilterButton>
+      );
+    } else {
+      buttons = FILTERS[filter].map((value, i) =>
+        <FilterButton
+          key={i}
+          active={value === this.state[filter]}
+          onClick={this._setFilter.bind(this, filter, value)}>
+          {value.capitalize()}
+        </FilterButton>
+      );
+    }
 
     return (
       <div className="row text-center">
-        <h3>Select a {filter}:</h3>
+        <h3>Select {filter === 'sizes' ? '' : 'a'} {filter}:</h3>
         <div className="btn-group btn-group-lg">
           {buttons}
         </div>
@@ -134,6 +166,7 @@ var ClosetApp = React.createClass({
         <section id="filters">
           {this._renderFilterButtons('gender')}
           {this._renderFilterButtons('style')}
+          {this._renderFilterButtons('sizes')}
         </section>
         <hr />
 
