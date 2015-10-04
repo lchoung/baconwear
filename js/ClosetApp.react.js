@@ -13,14 +13,16 @@ var FILTERS = {
   style: ['latin', 'standard', 'any'],
 };
 
-var MAX_RESULTS = 50;
+var MAX_RESULTS = 60;
 
 var ClosetApp = React.createClass({
   mixins: [ParseReact.Mixin],
 
   observe: function(props, state) {
     var Clothing = Parse.Object.extend('Clothing');
-    var clothingQuery = new Parse.Query(Clothing);
+    var clothingQuery = new Parse.Query(Clothing)
+      .addAscending('label'); // sort by label number
+
     // Filter clothing by state
     if (state.gender !== 'any') {
       clothingQuery = clothingQuery.equalTo('gender', state.gender);
