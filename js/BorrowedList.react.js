@@ -128,25 +128,23 @@ var BorrowedList = React.createClass({
 
   render: function() {
     return (
-      <div>
-        <section id="clothes">
-          <table className="table table-striped">
-            <thead>
-              <th>Label</th>
-              <th>Name</th>
-              <th>Size</th>
-              <th>Borrower</th>
-              <th>Borrow Date</th>
-              <th>Return Date</th>
-              <th>Status</th>
-              <th>Action</th>
-            </thead>
-            <tbody>
-              {this.data.loans.map(this._renderLoan)}
-            </tbody>
-          </table>
-        </section>
-      </div>
+      <section id="clothes">
+        <table className="table table-striped">
+          <thead>
+            <th>Label</th>
+            <th>Name</th>
+            <th>Size</th>
+            <th>Borrower</th>
+            <th>Borrow Date</th>
+            <th>Return Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </thead>
+          <tbody>
+            {this.data.loans.map(this._renderLoan)}
+          </tbody>
+        </table>
+      </section>
     );
   },
 });

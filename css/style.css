@@ -166,6 +166,24 @@ a.carousel-control:hover {
   margin-left: 10px;
 }
 
+.emails {
+  padding: 5px 10px;
+}
+
+.input-small {
+  display: inline-block;
+  width: 20%;
+  min-width: 200px;
+}
+
+.padleft {
+  padding-left: 10px;
+}
+
+.padtop {
+  padding-top: 10px;
+}
+
 #footer {
   margin-bottom: 20px;
 }

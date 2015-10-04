@@ -9,7 +9,7 @@ Parse.initialize("YXvSIjRRf2csXhdUXSUNpfZ3HeOiNzO1CtTTTa0Q", "F4E6BFoCVg12TD4jua
 var ClosetApp;
 $(document).ready(function() {
   if (window.location.pathname.indexOf('/borrowed') !== -1) {
-    ClosetApp = require('./BorrowedList.react.js');
+    ClosetApp = require('./Admin.react.js');
   } else {
     ClosetApp = require('./ClosetApp.react.js');
   }
