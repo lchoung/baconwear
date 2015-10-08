@@ -32,9 +32,9 @@ Parse.Cloud.afterSave('Loan', function(request) {
         request.object.get('name'),
         '(' + request.object.get('label') + ')',
         'from',
-        moment(request.object.borrowDate).format(DATE_FORMAT),
+        moment(request.object.get('borrowDate')).format(DATE_FORMAT),
         'until',
-        moment(request.object.returnDate).format(DATE_FORMAT),
+        moment(request.object.get('returnDate')).format(DATE_FORMAT),
         '. Please visit http://www.cmubdc.org/closet/admin to approve or deny this loan.'
       ].join(' ')
     }, {
